@@ -85,7 +85,8 @@ module.exports.refreshToken = async (req, res, next) => {
         }
         response(res, data, 200, "GET NEW TOKEN SUCCESS")
     } catch (error) {
-        next(createError.InternalServerError)
+        console.log(error)
+        next(createError.InternalServerError())
     }
 }
 

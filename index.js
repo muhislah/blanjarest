@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(morgan('dev'))
 
 
-app.use('/products',  productsRouter)
+app.use('/products', productsRouter)
 app.use('/categories', categoryRouter)
 app.use('/auth', usersRouter)
 
