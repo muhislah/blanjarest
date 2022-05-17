@@ -19,15 +19,7 @@ const insertData = ({name, description, price,stock, category_id, photo}) => {
     return pool.query(`INSERT INTO products (name,description,price,stock,category_id, photo) VALUES ('${name}','${description}',${price},${stock},${category_id}, '${photo}')`)
 }
 const updateData = ({name, description, price, stock, category_id, id}) => {
-    return pool.query(`
-    UPDATE products SET
-        name = COALESCE('${name}', name),
-        description = COALESCE('${description}', description),
-        price = COALESCE(${price}, price),
-        stock = COALESCE(${stock}, stock),
-        category_id = COALESCE(${category_id}, category_id),
-        updated_at = NOW()
-    WHERE id = ${id}`)
+    return pool.query("UPDATE products SET name = COALESCE($1, name), description = COALESCE($2, description), price = COALESCE($3, price), stock = COALESCE($4, stock), category_id = COALESCE($5, category_id), updated_at = NOW() WHERE id = $6",[name, description, price, stock, category_id, id])
 }
 const deleteData = (id) => {
     return pool.query(`DELETE FROM products WHERE id = ${id}`)

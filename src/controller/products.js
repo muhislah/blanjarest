@@ -63,9 +63,9 @@ module.exports.insertData = async (req,res,next) => {
 module.exports.updateData = async(req, res, next) => {
     try {
         const id = +req.params.id
-        const {name, description, price, stock, category_id } = req.body
         const data = {id, ...req.body}
-        const { rowCount } = await updateData({name, description, price, stock, category_id, id})
+        console.log(data)
+        const { rowCount } = await updateData(data)
         if (!rowCount){
             return response(res, [], 500, "FAILED UPDATE DATA")
         }
