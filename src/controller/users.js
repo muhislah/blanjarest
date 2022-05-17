@@ -60,6 +60,10 @@ module.exports.loginUser = async (req, res,next) => {
         if (!result){
             return response(res, [] , 200, "EMAIL OR PASSWORD WRONG")
         }
+        console.log(rows)
+        if (rows.status === "Pending"){
+            return response(res, [], 500, "YOUR ACCOUT MUST BE ACTIVATE")
+        }
         const data = {
             email : rows.email,
             accessToken : await generateAccessToken(rows.email, rows.role),
@@ -67,6 +71,7 @@ module.exports.loginUser = async (req, res,next) => {
         }
         response(res, data , 200, "LOGIN SUCCESS")
     } catch (error) {
+        console.log(error)
         next(createError.InternalServerError())
     }
 }

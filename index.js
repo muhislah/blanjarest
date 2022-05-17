@@ -30,6 +30,10 @@ app.use((err, req, res, next) => {
     if (!err){
         return next()
     }
+    if (err.code === 'LIMIT_FILE_SIZE') {
+        return response(res, [] , 500, "File Max is 2 MB")
+    }
+    console.log(err)
     return response(res, [] , err.status, err.message)
 })
 
