@@ -38,6 +38,7 @@ module.exports.insertCateogories = async (req, res, next) => {
         }
         response(res, req.body, 200, "INSERT DATA SUCCESS")
     } catch (error) {
+        console.log(error)
         return next(createError.InternalServerError())
     }
 

@@ -21,7 +21,7 @@ app.use(xss())
 
 app.use(morgan('dev'))
 
-
+app.use('/img', express.static('./upload'))
 app.use('/products', productsRouter)
 app.use('/categories', categoryRouter)
 app.use('/auth', usersRouter)
