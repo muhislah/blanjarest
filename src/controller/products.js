@@ -32,7 +32,10 @@ module.exports.getData = async (req, res, next) => {
         if (!rowCount){
             return response(res, rows, 200, "NO DATA WITH THAT ID")
         }
-        response(res, rows, 200, "GET DETAIL DATA SUCCESS")
+        const photo = JSON.parse(rows[0].photo)
+        rows[0].photo = photo
+        const data = [...rows]
+        response(res, data, 200, "GET DETAIL DATA SUCCESS")
     } catch ( error ) {
         console.log(error)
         return next(createError(400, "GET DATA FAILED"))
@@ -42,7 +45,7 @@ module.exports.getData = async (req, res, next) => {
 module.exports.insertData = async (req,res,next) => {
     try {
         let photo = req.files.map((data) => {
-            return data.filename
+            return `http://${req.get('host')}/img/${data.filename}`
         })
         console.log(photo)
         const data = {
