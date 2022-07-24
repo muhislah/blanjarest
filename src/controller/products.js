@@ -20,7 +20,7 @@ module.exports.getData = async (req, res, next) => {
                 page : page,
                 limit : limit
             }
-            return response(res, rows, 200, "GET DATA SUCCESS", pagination, search)
+            return response(res, rows , 200, "GET DATA SUCCESS", pagination, search)
         } catch (error) {
             console.log(error)
             console.log("Error Getting data From Database")

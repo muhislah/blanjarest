@@ -15,9 +15,11 @@ const PORT = process.env.PORT || 5000
 
 app.use(express.json())
 
-app.use(cors())
-app.use(helmet())
-app.use(xss())
+app.use(cors({
+    origin : 'http://localhost:3000'
+}))
+// app.use(helmet())
+// app.use(xss())
 
 app.use(morgan('dev'))
 
@@ -30,7 +32,7 @@ app.use((err, req, res, next) => {
     if (!err){
         return next()
     }
-    if (err.code === 'LIMIT_FILE_SIZE') {
+    if (err.code === 'LIMIT_FILE_SIZE' ) {
         return response(res, [] , 500, "File Max is 2 MB")
     }
     console.log(err)
@@ -41,6 +43,6 @@ app.use((req,res) => {
     response(res, [] , 404, "Page Not Found")
 })
 
-app.listen(PORT, () => {
+app.listen(5000, () => {
     console.log("App Running on Port "+PORT)
 })

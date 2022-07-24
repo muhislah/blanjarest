@@ -2,9 +2,9 @@ const pool = require("../config/db")
 
 const getData = ({search, orderby, order, limit, offset}) => {
     if (!search){
-        return pool.query(`SELECT id,name,price,stock FROM products ORDER BY ${orderby} ${order} LIMIT ${limit} OFFSET ${offset}`)
+        return pool.query(`SELECT id,name,price,stock,photo FROM products ORDER BY ${orderby} ${order} LIMIT ${limit} OFFSET ${offset}`)
     }
-    return pool.query(`SELECT id,name,price,stock FROM products  WHERE name ILIKE '%${search}%' ORDER BY ${orderby} ${order} LIMIT ${limit} OFFSET ${offset}`) 
+    return pool.query(`SELECT id,name,price,stock,photo FROM products  WHERE name ILIKE '%${search}%' ORDER BY ${orderby} ${order} LIMIT ${limit} OFFSET ${offset}`) 
 }
 const getDetail = (id) => {
     return pool.query('SELECT p.id, p.name, p.description, p.price, p.stock, c.name AS category_name, p.photo , p.created_at, p.updated_at FROM products AS p JOIN categories AS c ON p.category_id = c.id WHERE p.id = $1 ',[id])
