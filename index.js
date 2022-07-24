@@ -43,6 +43,6 @@ app.use((req,res) => {
     response(res, [] , 404, "Page Not Found")
 })
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log("App Running on Port "+PORT)
 })
