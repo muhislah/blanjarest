@@ -1,7 +1,7 @@
 const pool = require("../config/db")
 
 const getData = (id) => {
-    return pool.query(`SELECT p.name, p.price, p.stock FROM categories as c JOIN products as p ON c.id = p.category_id WHERE c.id = ${id}`)
+    return pool.query(`SELECT p.name, p.price, p.photo, p.stock, c.name as category FROM categories as c JOIN products as p ON c.id = p.category_id WHERE c.id = ${id}`)
 }
 const getAll = () => {
     return pool.query(`SELECT id, name FROM categories ORDER BY id`)
