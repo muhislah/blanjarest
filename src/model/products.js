@@ -15,12 +15,13 @@ const countData = (search) => {
     }
     return pool.query(`SELECT COUNT(*) AS total FROM products WHERE name ILIKE '%${search}%'`)
 }
-const insertData = ({name, description, price,stock, category_id, photo}) => {
+const insertData = ({id, name, description, price,stock, category_id, photo}) => {
     const photos = JSON.stringify(photo)
-    return pool.query(`INSERT INTO products (name,description,price,stock,category_id, photo) VALUES ('${name}','${description}',${price},${stock},${category_id}, '${photos}')`)
+    return pool.query(`INSERT INTO products (id, name,description,price,stock,category_id, photo) VALUES ('${id}','${name}','${description}',${price},${stock},${category_id}, '${photos}')`)
 }
-const updateData = ({name, description, price, stock, category_id, id}) => {
-    return pool.query("UPDATE products SET name = COALESCE($1, name), description = COALESCE($2, description), price = COALESCE($3, price), stock = COALESCE($4, stock), category_id = COALESCE($5, category_id), updated_at = NOW() WHERE id = $6",[name, description, price, stock, category_id, id])
+const updateData = ({name, description, price, stock, category_id, id, photo = null}) => {
+    const photos = photo ? JSON.stringify(photo) : null
+    return pool.query("UPDATE products SET name = COALESCE($1, name), description = COALESCE($2, description), price = COALESCE($3, price), stock = COALESCE($4, stock), category_id = COALESCE($5, category_id), photo = COALESCE($6, photo), updated_at = NOW() WHERE id = $7",[name, description, price, stock, category_id, photos, id])
 }
 const deleteData = (id) => {
     return pool.query(`DELETE FROM products WHERE id = ${id}`)

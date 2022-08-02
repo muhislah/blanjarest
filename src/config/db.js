@@ -10,11 +10,11 @@ const pool = new Pool({
   ssl: { rejectUnauthorized : false }
 })
 
-pool.connect((error) => {
+pool.connect((error, client) => {
   if (error) {
     console.log("there is error: ", error)
   } else {
-    console.log(`connected to database : ${process.env.DB_NAME}`)
+    console.log("connect database " +client.database + " in "+client.host)
   }
 });
 

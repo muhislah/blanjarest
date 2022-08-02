@@ -91,7 +91,7 @@ const sendMail = (email, token, fullname) => {
                     font-size: 14px;
                     box-sizing: border-box;
                     margin : 20px auto;
-                    border-radius: 25px;" href="http://localhost:3000/auth/verify/${token}">ACTIVATE NOW</a>
+                    border-radius: 25px;" href="http://localhost:5000/auth/verify/${token}">ACTIVATE NOW</a>
                     <p>This activation link will be expired until 2 hours from this email sent</p>
 
                 </div>
@@ -100,7 +100,9 @@ const sendMail = (email, token, fullname) => {
             </html>`
         });
 
-        console.log(`mail sent to ${email}`, result);
+        if(result.accepted){
+            console.log('mail sent to '+ email)
+        }
     }
 }
 

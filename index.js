@@ -11,11 +11,15 @@ const xss = require('xss-clean')
 const productsRouter = require("./src/route/products")
 const categoryRouter = require("./src/route/categories")
 const usersRouter = require("./src/route/users");
+const addressRouter = require('./src/route/address');
+const cartRouter = require('./src/route/cart');
+const checkoutRouter = require('./src/route/checkout');
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
 
 app.use(cors({
+    credentials : true,
     origin : 'http://localhost:3000'
 }))
 // app.use(helmet())
@@ -27,6 +31,9 @@ app.use('/img', express.static('./upload'))
 app.use('/products', productsRouter)
 app.use('/categories', categoryRouter)
 app.use('/auth', usersRouter)
+app.use('/address', addressRouter)
+app.use('/cart', cartRouter)
+app.use('/checkout' , checkoutRouter)
 
 app.use((err, req, res, next) => {
     if (!err){

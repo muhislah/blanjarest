@@ -14,22 +14,24 @@ const generateJWT = async (email) => {
     return result
 }
 
-const generateAccessToken = async (email, role) => {
+const generateAccessToken = async (id, email, role) => {
     const payload = {
+        id,
         email,
         role,
         type : "access-token"
     }
     const options = {
         algorithm: 'HS256',
-        expiresIn : 60 * 2
+        expiresIn : '1h'
     }
     const result = await jwt.sign(payload, process.env.SIGNATURE_KEY , options)
     return result
 }
 
-const generateRefreshToken = async (email, role) => {
+const generateRefreshToken = async (id, email, role) => {
     const payload = {
+        id,
         email,
         role,
         type : "refresh-token"

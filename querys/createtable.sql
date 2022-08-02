@@ -78,3 +78,29 @@ SELECT * FROM categories as c JOIN products as p ON c.id = p.category_id WHERE c
 INSERT INTO categories (id, name) VALUES (6, 'Training');
 UPDATE categories SET name = 'Non-Training' WHERE id = 6;
 DELETE FROM categories WHERE id = 6;
+
+CREATE TABLE address (
+    id varchar(255),
+    type varchar(255),
+    name varchar(255),
+    phone varchar(255),
+    address varchar(255),
+    postalcode varchar(255),
+    city varchar(255),
+    user_id varchar(255) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+create table cart (
+    id varchar(255),
+    product_id varchar(255) REFERENCES products (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    stock int,
+    user_id varchar(255) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+create table checkout (
+    id varchar(255),
+    product_id varchar(255) REFERENCES products (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    stock int,
+    user_id varchar(255) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    status varchar(255)
+)

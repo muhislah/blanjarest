@@ -8,6 +8,7 @@ module.exports.auth = async (req, res, next) => {
             let token =  req.headers.authorization.split(" ")[1]
             const payload = await verifyJWT(token)
             req.payload = payload
+            console.log(payload)
             next()
         }else {
             response(res, [] , 200, "SERVER NEED TOKEN")

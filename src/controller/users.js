@@ -1,20 +1,22 @@
 const bcrypt = require('bcrypt')
 const { v4: uuid } = require('uuid')
-const { searchUser, registerUser, activateUser } = require('../model/users')
+const { searchUser, registerUser, activateUser, updateUser } = require('../model/users')
 const response = require('../helper/response')
 const createError = require('http-errors')
 const { generateJWT, verifyJWT, generateAccessToken, generateRefreshToken } = require('../helper/jwt')
 const sendMail = require('../helper/mail')
 
 module.exports.registerUser = async (req, res, next) => {
-    const { fullname,email,password} = req.body
+    const { fullname,email,password, role} = req.body
     try {
         const users = {}
         users.id = uuid()
         users.fullname = fullname
         users.email = email
         users.password =  await bcrypt.hash(password, 10)
-        users.role = 'Customer'
+        users.role = role
+        users.storename = req.body.storename || null
+        users.phone = req.body.phone || null
         users.status = 'Pending'
         const { rowCount } = await searchUser(email)
         if (rowCount){
@@ -41,6 +43,7 @@ module.exports.verifyUser = async (req, res, next) => {
         if (!rowCount){
             return response(res, [] , 200, "ACTIVATION FAILED")
         }
+        res.redirect('http://localhost:3000/verify')
         response(res, [] , 200, "ACTIVATION SUCCESS")
     } catch (error) {
         next(createError.InternalServerError())
@@ -66,8 +69,8 @@ module.exports.loginUser = async (req, res,next) => {
         }
         const data = {
             email : rows.email,
-            accessToken : await generateAccessToken(rows.email, rows.role),
-            refreshToken : await generateRefreshToken(rows.email, rows.role)
+            accessToken : await generateAccessToken(rows.id, rows.email, rows.role),
+            refreshToken : await generateRefreshToken(rows.id, rows.email, rows.role)
         }
         response(res, data , 200, "LOGIN SUCCESS")
     } catch (error) {
@@ -95,10 +98,25 @@ module.exports.refreshToken = async (req, res, next) => {
     }
 }
 
+module.exports.updateProfile = async (req,res,next) => {
+    try {
+        const id = req.payload.id
+        const body = req.body
+        const photo = req?.file?.path 
+        const { rowCount } = await updateUser({photo, id, ...body})
+        if(!rowCount) {
+            return response(res, [], 200, 'UPDATE PROFILE FAILED')
+        }
+        response(res, { photo, id, ...body } , 200, 'UPDATE PROFILE SUCCESS')
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports.getProfile = async (req, res, next) => {
     try {
         const payload = req.payload
-        const {email, type} = payload 
+        const {id, email, type} = payload 
         if (type != "access-token"){
            return response(res, [] ,200 , "TOKEN WRONG")
         }
@@ -106,6 +124,7 @@ module.exports.getProfile = async (req, res, next) => {
         delete data.password
         response(res, data, 200, "GET PROFILE SUCCESS")
     } catch (error) {
+        console.log(error)
         next(createError.InternalServerError())
     }
 }
