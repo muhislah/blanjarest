@@ -69,6 +69,7 @@ module.exports.loginUser = async (req, res,next) => {
         }
         const data = {
             email : rows.email,
+            status : rows.role,
             accessToken : await generateAccessToken(rows.id, rows.email, rows.role),
             refreshToken : await generateRefreshToken(rows.id, rows.email, rows.role)
         }
