@@ -92,8 +92,8 @@ module.exports.updateData = async(req, res, next) => {
 
 module.exports.deleteData = async(req, res, next) => {
     try {
-        const id = +req.params.id
-        const { rowCount } = await deleteData(id)
+        const id = req.params.id
+        const {rowCount}= await deleteData(id)
         if (!rowCount){
             return response(res, [], 500, "FAILED DELETE DATA")
         }

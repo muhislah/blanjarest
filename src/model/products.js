@@ -24,7 +24,7 @@ const updateData = ({name, description, price, stock, category_id, id, photo = n
     return pool.query("UPDATE products SET name = COALESCE($1, name), description = COALESCE($2, description), price = COALESCE($3, price), stock = COALESCE($4, stock), category_id = COALESCE($5, category_id), photo = COALESCE($6, photo), updated_at = NOW() WHERE id = $7",[name, description, price, stock, category_id, photos, id])
 }
 const deleteData = (id) => {
-    return pool.query(`DELETE FROM products WHERE id = ${id}`)
+    return pool.query('DELETE FROM products WHERE id = $1',[id])
 }
 
 module.exports = { getData, countData, insertData, getDetail, updateData, deleteData}
