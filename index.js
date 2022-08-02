@@ -20,7 +20,7 @@ app.use(express.json())
 
 app.use(cors({
     credentials : true,
-    origin : ['http://localhost:3000','https://blanja-frontend-app.vercel.app/']
+    origin : ['http://localhost:3000','https://blanja-frontend-app.vercel.app']
 }))
 // app.use(helmet())
 // app.use(xss())
