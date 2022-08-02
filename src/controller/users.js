@@ -43,7 +43,7 @@ module.exports.verifyUser = async (req, res, next) => {
         if (!rowCount){
             return response(res, [] , 200, "ACTIVATION FAILED")
         }
-        res.redirect('http://localhost:3000/verify')
+        res.redirect('https://blanja-frontend-app.vercel.app/verify')
         response(res, [] , 200, "ACTIVATION SUCCESS")
     } catch (error) {
         next(createError.InternalServerError())
