@@ -9,8 +9,8 @@ const searchUser = (email) => {
 const activateUser = ({email, status}) => {
     return pool.query(`UPDATE users SET status = '${status}' WHERE email= '${email}'`)
 }
-const updateUser = ({fullname, email, phone, gender, birth, photo, id}) => {
-    return pool.query('UPDATE users SET fullname = COALESCE($1, fullname), email = COALESCE($2, email), phone = COALESCE($3, phone), gender = COALESCE($4, gender), birth = COALESCE($5, birth), photo = COALESCE($6, photo) WHERE id = $7',[fullname, email, phone, gender, birth, photo, id])
+const updateUser = ({fullname, email, phone, gender, birth, photo, storename, storedescription, id}) => {
+    return pool.query('UPDATE users SET fullname = COALESCE($1, fullname), email = COALESCE($2, email), phone = COALESCE($3, phone), gender = COALESCE($4, gender), birth = COALESCE($5, birth), photo = COALESCE($6, photo) , storename = COALESCE($7, storename), storedescription = COALESCE($8, storedescription) WHERE id = $9',[fullname, email, phone, gender, birth, photo, storename, storedescription, id])
 }
 
 module.exports = {
