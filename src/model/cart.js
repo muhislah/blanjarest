@@ -1,7 +1,7 @@
 const pool = require("../config/db")
 
 const getCart = (id) => {
-    return pool.query('SELECT c.id, c.user_id, c.stock, p.photo,  p.id as product_id, p.name, p.price from cart as c LEFT JOIN products as p ON c.product_id = p.id WHERE c.user_id = $1',[id])
+    return pool.query('SELECT c.id, c.user_id, c.stock, p.photo,  p.id as product_id, p.name, p.price from cart as c JOIN products as p ON c.product_id = p.id WHERE c.user_id = $1',[id])
 }
 const searchCart = (product_id) => {
   return pool.query('SELECT * FROM cart where product_id = $1', [product_id])

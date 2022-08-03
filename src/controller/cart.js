@@ -6,6 +6,7 @@ const { v4: uuid } = require('uuid')
 module.exports.getCart = async (req, res, next) => {
   try {
     const user_id = req.payload.id
+    console.log(user_id)
     const { rows } = await getCart(user_id)
     if (rows.length <= 0) {
       return response(res, [], 200, 'NO CART FOUND')
