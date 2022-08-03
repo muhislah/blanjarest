@@ -33,7 +33,7 @@ module.exports.addCart = async (req, res, next) => {
       product_id : req.body.product_id
     }
     console.log(data)
-    const { rows : same } = await searchCart(data.product_id)
+    const { rows : same } = await searchCart(data.product_id, data.user_id)
     if(same?.length > 0){
       console.log(same)
       const { rowCount } = await updateCart(same[0].id, data?.stock ?  (same[0].stock + data.stock) : ( same[0].stock + 1))
